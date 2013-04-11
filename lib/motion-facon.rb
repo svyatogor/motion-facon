@@ -9,6 +9,7 @@ end
 
 Motion::Project::App.setup do |app|
   app.development do
+    base_path = "#{File.dirname(__FILE__)}"
     files = []
     files << 'motion-facon/mockable'
     files << 'motion-facon/spec_helpers'
@@ -22,7 +23,7 @@ Motion::Project::App.setup do |app|
 
 
     files.each do |file|
-      app.files.unshift "lib/#{file}.rb"
+      app.files.unshift File.expand_path "#{base_path}/#{file}.rb"
     end
 
     app.detect_dependencies = true
