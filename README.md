@@ -35,6 +35,12 @@ You can now write [Bacon](https://github.com/chneukirchen/bacon) specs like this
 
       Person.first
     end
+
+    it "knows how many times we call a method" do
+      Person.should.receive(:find).at_least(3)
+      
+      Person.list
+    end
   end
 ```
 
@@ -59,6 +65,7 @@ Contributors
 * [James Tucker](https://github.com/raggi) for #times, #once, #never expectation matchers.
 * [Peter Kim](https://github.com/petejkim) for [MacBacon](https://github.com/alloy/MacBacon) support.
 * [Yossef Mendelssohn](https://github.com/ymendel) for Ruby 1.9.2 compatibility fixes.
+* [Ivan Acosta-Rubio](https://github.com/ivanacostarubio) for at_least expectation matcher.
 
 Thanks to
 ---------
