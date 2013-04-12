@@ -180,4 +180,32 @@ describe "A mock object" do
 
     lambda { @mock.spec_verify }.should.raise(Facon::MockExpectationError).message.should == "Mock 'test mock' expected :message with (any args) 0 times, but received it 1 time"
   end
+
+  describe "at_least" do
+    it "fails if method is never called" do
+      @mock.should.receive(:message).at_least(4)
+      lambda{
+        @mock.spec_verify
+      }.should.raise(Facon::MockExpectationError).message.should == "Mock 'test mock' expected :message with (any args) 4 times, but received it 0 times"
+    end
+
+    it "fails if the method gets call less times that expected" do
+      @mock.should.receive(:message).at_least(4)
+      3.times { @mock.message }
+      lambda{ @mock.spec_verify }.should.raise(Facon::MockExpectationError)
+    end
+
+    it "passed when the method is call" do
+      @mock.should.receive(:message).at_least(4)
+      4.times { @mock.message }
+      lambda{ @mock.spec_verify}.should.not.raise
+    end
+
+    it "is ok if we call the method more times that required" do
+      @mock.should_receive(:message).at_least(4)
+      5.times{ @mock.message}
+      lambda{ @mock.spec_verify }.should.not.raise
+    end
+  end
+
 end
