@@ -100,7 +100,11 @@ module Facon
           metaclass.instance_eval do
             if method_defined?(munged_method.to_s)
               alias_method method, munged_method
-              undef_method munged_method
+              begin
+                undef_method munged_method
+              rescue => e
+                NSLog "\n >> Facon Error: #{e.message}"
+              end
             else
               undef_method method
             end
